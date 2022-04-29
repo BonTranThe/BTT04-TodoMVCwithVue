@@ -58,7 +58,10 @@
         <span
           ><strong>{{ remaining }} </strong>
           <span class="item_left"
-            >{{ remaining > 1 ? " items" : " item" }} left</span
+            >{{
+              remaining === 0 || remaining === 1 ? "item" : "items"
+            }}
+            left</span
           ></span
         >
         <div class="filters">
@@ -97,6 +100,11 @@
 </template>
 <script>
 const STORAGE_KEY = "vue-todomvc";
+// interface Todo {
+//   id: number
+//   content: string
+//   status: true | false
+// }
 const filters = {
   all: function (todos) {
     return todos;
@@ -169,9 +177,7 @@ export default {
     editTodo(index) {
       //Access to input[index] (content)
       this.hide(index);
-      console.log(this.$refs.valueEdit);
       let edit = this.$refs.valueEdit[index];
-      console.log(typeof edit);
       edit.readOnly = false;
       edit.classList.remove("checked");
       edit.setSelectionRange(edit.value.length, edit.value.length);
@@ -261,16 +267,8 @@ export default {
 };
 </script>
 <style>
-body {
-  background: rgb(236, 220, 220);
-}
-
-#app {
-  max-width: 550px;
-  background: #fff;
-}
 #todoapp {
-  max-width: 520px;
+  max-width: 500px;
   margin: 0 auto;
   background: #fff;
   border-radius: 7px;
@@ -288,10 +286,9 @@ body {
 }
 
 .header {
-  max-width: 500px;
+  max-width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-left: 10px;
 }
 
 .new-todo {
@@ -322,7 +319,6 @@ body {
 
 .main {
   max-width: 500px;
-  margin-left: 10px;
 }
 
 .main ul {
@@ -385,7 +381,7 @@ body {
 .footer {
   max-width: 480px;
   height: 50px;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .controls {
